@@ -62,8 +62,9 @@ public class PushInterceptor implements PacketInterceptor, Startable {
 							queueService.addMessage(message);
 						}
 					}
+				} else {
+					log.error("Message is missing messageStatus, message: {}", message.toString());
 				}
-
 			}
 		}
 	}
