@@ -11,6 +11,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 public class Properties {
+	private static final int DEFAULT_WORKERS = 1;
+	private static final int DEFAULT_GCM_TTL = 2419200;
 
 	private static volatile Properties instance;
 	private final AtomicInteger elasticNodeIndex = new AtomicInteger(1);
@@ -28,11 +30,11 @@ public class Properties {
     private Properties() {
     	gcmUrl = JiveGlobals.getProperty(Conf.GCM_URL.toString());
     	gcmKey = JiveGlobals.getProperty(Conf.GCM_API_KEY.toString());
-    	gcmTTL = Integer.valueOf(JiveGlobals.getProperty(Conf.GCM_TTL.toString()));
-    	workers = Integer.valueOf(JiveGlobals.getProperty(Conf.WORKERS.toString()));
+    	gcmTTL = JiveGlobals.getIntProperty(Conf.GCM_TTL.toString(), DEFAULT_GCM_TTL);
+    	workers = JiveGlobals.getIntProperty(Conf.WORKERS.toString(), DEFAULT_WORKERS);
     	elasticSearchAppIndex = JiveGlobals.getProperty(Conf.ELASTIC_APP_INDEX.toString());
-    	redisTimeOut = Integer.valueOf(JiveGlobals.getProperty(Conf.REDIS_TIMEOUT.toString()));
-    	redisMaxRedirects = Integer.valueOf(JiveGlobals.getProperty(Conf.REDIS_MAX_REDIRECTS.toString()));
+    	redisTimeOut = JiveGlobals.getIntProperty(Conf.REDIS_TIMEOUT.toString(), 0);
+    	redisMaxRedirects = JiveGlobals.getIntProperty(Conf.REDIS_MAX_REDIRECTS.toString(), 0);
     	redisNodes = Sets.newHashSet(Arrays.asList(JiveGlobals.getProperty(Conf.REDIS_NODES.toString()).split(",")));
     	elasticSearchNodes = Lists.newArrayList(Arrays.asList(JiveGlobals.getProperty(Conf.ELASTIC_NODES.toString()).split(",")));
     }
